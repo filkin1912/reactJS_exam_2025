@@ -1,3 +1,5 @@
+INFORMATION ABOUT SERVER: https://github.com/softuni-practice-server/softuni-practice-server
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
