@@ -1,9 +1,12 @@
 import {Link} from 'react-router-dom';
-import { AuthContext } from '../../../context/AuthContext';
 import { useContext } from 'react';
+import { useLocation } from 'react-router-dom';
+import {SearchForm} from "../SearchForm/SearchForm";
+import { AuthContext } from '../../../context/AuthContext';
 
-export const Header = () => {
-    const { isAuthenticated, userEmail } = useContext(AuthContext);
+export const Header = ({onSearch}) => {
+    const { isAuthenticated, userId } = useContext(AuthContext);
+    const location = useLocation();
 
     return(
         <header className="header_section">
@@ -27,16 +30,18 @@ export const Header = () => {
                                         <li className="nav-item">
                                             <Link className="nav-link" to={'/create'}> Create game </Link>
                                         </li>
-
+                                        <li className="nav-item">
+                                            <Link className="nav-link" to={`/details/${userId}`}>Details</Link>
+                                        </li>
                                         <li className="nav-item">
                                             <Link className="nav-link" to={'/logout'}>Logout</Link>
                                         </li>
                                     </>
                                 )}
-                                
+
                                 {!isAuthenticated && (
                                     <>
-                                        <li className="nav-item">
+                                    <li className="nav-item">
                                             <Link className="nav-link" to={'/register'}> Register </Link>
                                         </li>
 
@@ -45,14 +50,9 @@ export const Header = () => {
                                         </li>
                                     </>
                                 )}
-                                {/* <li className="nav-item">
-                                    <Link className="nav-link" to={'/edit'}> Edit game </Link>
-                                </li> */}
+
                             </ul>
-                            <form className="form-inline ">
-                                <input type="search" placeholder="Search" />
-                                <button className="btn  my-2 my-sm-0 nav_search-btn" type="submit" />
-                            </form>
+                            {location.pathname === '/catalog' && <SearchForm onSearch={onSearch}/>}
                             
                         </div>
                     </div>

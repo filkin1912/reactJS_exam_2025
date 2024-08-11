@@ -104,7 +104,7 @@ ol,
 ul,
 dl {
   margin-top: 0;
-  margin-bottom: 2px;
+  margin-bottom: 10px;
 }
 
 ol ol,
@@ -362,6 +362,7 @@ template {
 h1, h2, h3, h4, h5, h6,
 .h1, .h2, .h3, .h4, .h5, .h6 {
   margin-bottom: 0.5rem;
+  margin-left: 1rem;
   font-weight: 500;
   line-height: 1.2;
 }
@@ -2307,9 +2308,12 @@ textarea.form-control {
   flex-flow: row wrap;
   -ms-flex-align: center;
   align-items: center;
+
+  color: white;
+  max-width: 30vw;
   
-  max-width: 25vw;
-  margin-left: 42%;
+  min-width: 20vw;
+  margin-left: 45%;
 }
 
 .form-inline .form-check {

@@ -618,6 +618,7 @@
     }
 
     function post(context, tokens, query, body) {
+    function post(context, tokens, query, body) {
         console.log('Request body:\n', body);
 
         validateRequest(context, tokens);

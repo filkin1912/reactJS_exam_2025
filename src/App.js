@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Routes, Route, useNavigate } from "react-router-dom";
+import {Routes, Route, useNavigate, useLocation} from "react-router-dom";
 
 import { gameServiceFactory } from "./services/gameService";
 import { authServiceFactory } from "./services/authService";
@@ -7,9 +7,7 @@ import { AuthContext } from "./context/AuthContext";
 
 import { Header } from "./components/Basic/Header/Header";
 import { Register } from "./components/Register/Register";
-import { BoughtGames } from "./components/BoughtGames/BoughtGames";
 import { EditGame } from "./components/EditGame/EditGame";
-import { DeleteGame} from "./components/DeleteGame/DeleteGame";
 import { Logout } from "./components/Logout/Logout";
 import { Home } from "./components/Home/Home";
 import { CreateGame } from "./components/CreateGame/CreateGame";
@@ -17,20 +15,44 @@ import { Login } from "./components/Login/Login";
 import { Footer } from "./components/Basic/Footer/Footer";
 import { Catalog } from "./components/Catalog/Catalog";
 import { DetailsGame } from "./components/DetailsGame/DetailsGame";
+import {UserDetails} from "./components/UserDetails/UserDetails";
+import {UserDetailsPage} from "./components/UserDetails/UserDetailsPage";
+import {userServiceFactory} from "./services/userService";
+
 
 function App() {
+  const location = useLocation();
   const navigate = useNavigate();
   const [games, setGames] = useState([]);
+  const [filteredGames, setFilteredGames] = useState([]);
   const [auth, setAuth] = useState({});
   const gameService = gameServiceFactory(auth.accessToken);
   const authService = authServiceFactory(auth.accessToken);
+  const userService = userServiceFactory(auth.accessToken);
+
 
   useEffect(() => {
-    gameService.getAll()
-        .then(result => {
-            setGames(result)
-        })
-}, []);
+  if(location.pathname !== '/catalog') {
+    setFilteredGames([]);
+  }
+
+  gameService.getAll()
+    .then(result => {
+        setGames(result)
+    })
+}, [location]);
+
+  const handleSearch = (searchTerm) => {
+    const results = games.filter(game =>
+        game.title.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    if (!results.length) {
+      setFilteredGames([]);
+      navigate('/catalog');
+      return;
+    }
+    setFilteredGames(results);
+  };
 
   const onCreateGameSubmit = async (data) => {
     const newGame = await gameService.create(data);
@@ -45,6 +67,8 @@ function App() {
       const result = await authService.login(data);
 
       setAuth(result);
+      console.log(result);
+      console.log(result._id);
 
       navigate("/catalog");
     } catch (error) {
@@ -70,9 +94,15 @@ function App() {
   };
 
   const onLogout = async () => {
-    await authService.logout();
+    try {
+      const authService = authServiceFactory(auth.accessToken);
+      await authService.logout();
+    } catch (error) {
+      console.error("Logout error: ", error); // have a look at the error message being printed here
+    }
 
     setAuth({});
+    navigate('/');
   };
 
   const onGameEditSubmit = async (values) => {
@@ -81,6 +111,16 @@ function App() {
     setGames((state) => state.map((x) => (x._id === values._id ? result : x)));
 
     navigate(`/catalog/${values._id}`);
+  };
+
+
+  const onUserEditSubmit = async (values) => {
+    console.log(`___________BEFORE SERVER____________`);
+
+    const result = await userService.update(values._ownerId, values);
+    console.log(result);
+
+    navigate(`/`);
   };
 
   const onGameDeleteSubmit = async (gameId) => {
@@ -104,17 +144,21 @@ function App() {
   return (
     <AuthContext.Provider value={contextValues}>
       <div>
-        <Header />
+        <Header onSearch={handleSearch} />
 
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/catalog" element={<Catalog games={games} />} />
+          <Route path="/" element={<Home games={games}/>} />
+          <Route path="/catalog" element={<Catalog games={games} filteredGames={filteredGames}/>} />
           <Route path='/catalog/:gameId' element={<DetailsGame onGameDeleteSubmit={onGameDeleteSubmit} />} />
           <Route
               path="/catalog/:gameId/edit"
               element={<EditGame onGameEditSubmit={onGameEditSubmit} />}
           />
-          <Route path="/bought" element={<BoughtGames />} />
+          <Route
+              path="/details/:userId"
+              element={<UserDetails onUserEditSubmit={onUserEditSubmit}/>}
+          />
+          <Route path="/user-details" element={<UserDetailsPage />} />
           <Route path="/register" element={<Register />} />
           <Route path="/logout" element={<Logout />} />
           <Route

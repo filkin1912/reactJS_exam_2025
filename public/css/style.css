@@ -828,6 +828,8 @@ a:focus {
 
 /* footer section*/
 .footer_section {
+  position: absolute;
+  bottom: 0;
   background-color: #121111;
   font-weight: 500;
 }

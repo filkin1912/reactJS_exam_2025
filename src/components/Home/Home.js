@@ -1,55 +1,34 @@
-export const Home = () => {
+
+export const Home = ({ games }) => {
+
+    const latestGames = games ? games.slice(-3) : [];
+
     return (
-        <section id="welcome-world">
-
-            <div id="home-page">
-                <h1>Latest Games</h1>
-
-            
-
-            
-                {/* <div className="game">
-                    <div className="image-wrap">
-                        <img src="./images/CoverFire.png" />
+        <section id="home-page">
+            <h1>Latest Games</h1>
+            <div style={{
+                display: "flex",
+                justifyContent: "space-between",
+                flexWrap: "wrap"
+            }}>
+                {latestGames.map(game =>
+                    <div key={game._id} style={{
+                        border: "1px solid black",
+                        // display: "flex",
+                        // justifyContent: "center",
+                        // alignItems: "center",
+                        backgroundImage: `url(${game.imageUrl})`,
+                        backgroundPosition: 'center',
+                        backgroundSize: 'cover',
+                        backgroundRepeat: 'no-repeat',
+                        width: "375px",
+                        height: "375px",
+                        overflow: "hidden"
+                    }}>
+                        {/*<img src={game.imageUrl} alt={game.title} style={{maxWidth: "100%", maxHeight: "100%"}} />*/}
                     </div>
-                    <h3>Cover Fire</h3>
-                    <div className="rating">
-                        <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
-                    </div>
-                    <div className="data-buttons">
-                        <a href="#" className="btn details-btn">Details</a>
-                    </div>
-                </div>
-                <div className="game">
-                    <div className="image-wrap">
-                        <img src="./images/ZombieLang.png" />
-                    </div>
-                    <h3>Zombie Lang</h3>
-                    <div className="rating">
-                        <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
-                    </div>
-                    <div className="data-buttons">
-                        <a href="#" className="btn details-btn">Details</a>
-                    </div>
-                </div>
-                <div className="game">
-                    <div className="image-wrap">
-                        <img src="./images/MineCraft.png" />
-                    </div>
-                    <h3>MineCraft</h3>
-                    <div className="rating">
-                        <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
-                    </div>
-                    <div className="data-buttons">
-                        <a href="#" className="btn details-btn">Details</a>
-                    </div> */}
-                {/* </div> */}
-
-                
-
-
-                <p className="no-articles">No games yet</p>
+                )}
             </div>
         </section>
     );
-}
+};

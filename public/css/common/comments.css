@@ -1,3 +1,10 @@
+.comment-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+     background-color: #121111;
+}
+
 .create-comment>.form>textarea {
     resize: none;
     min-width: 540px;
@@ -12,15 +19,15 @@
 }
 
 .create-comment {
-    margin-top: 20px;
+    margin-top: 68px;
     position: relative;
     text-align: center;
     width: 600px;
     height: auto;
     border-radius: 4px;
-    padding: 30px;
+    padding: 10px;
     box-sizing: border-box;
-    background: #6f5d9c;
+    background: #121111;
     box-shadow: 0px 0px 0px 0px #324851, 1px -1px 2px #3b424d;
 }
 
@@ -37,8 +44,8 @@
     display: inline-block;
     position: static;
     margin: 0px auto 5px auto;
-    box-shadow: 2px 2px 2px 0 rgba(0, 0, 0, 0.2), 2px 2px 1px 0 rgba(0, 0, 0, -4.81);
-    border-radius: 4px;
+    box-shadow: 1px 1px 1px 0 rgba(0, 0, 0, 0.2), 1px 1px 1px 0 rgba(0, 0, 0, -4.81);
+    border-radius: 2px;
     margin-left: 30px;
     background: #9e9191;
     color: white;

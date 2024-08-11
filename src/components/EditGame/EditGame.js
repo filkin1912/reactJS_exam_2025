@@ -74,6 +74,7 @@ export const EditGame = ({ onGameEditSubmit,}) => {
 
                     <label htmlFor="summary">SUMMARY:</label>
                     <textarea name="summary" id="summary" value={values.summary} onChange={changeHandler}></textarea>
+
                     <input className="btn submit" type="submit" value="EDIT GAME" />
 
                 </div>

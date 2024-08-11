@@ -2,56 +2,68 @@ import { useEffect, useState, useContext } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 
 import { gameServiceFactory } from '../../services/gameService';
+import * as commentService from '../../services/commentService';
 import { useService } from '../../hooks/useService';
 import { AuthContext } from '../../context/AuthContext';
 
 export const DetailsGame = ({onGameDeleteSubmit}) => {
-    const { userId } = useContext(AuthContext);
+    const { userId, userEmail, isAuthenticated } = useContext(AuthContext);
     const [username, setUsername] = useState('');
     const [comment, setComment] = useState('');
     const { gameId } = useParams();
     const [game, setGame] = useState({});
     const gameService = useService(gameServiceFactory)
     const navigate = useNavigate();
+    const isLoggedIn = Boolean(userId);
 
 
     useEffect(() => {
-        gameService.getOne(gameId)
-            .then(result => {
-                setGame(result);
-            })
-    }, [gameId]);
+    const fetchGameDetailsAndComments = async () => {
+        try {
+            const gameDetails = await gameService.getOne(gameId)
+            const allComments = await commentService.getAll(gameId)
+            const comments = allComments.filter(comment => comment.gameId === gameId);
+            setGame({ ...gameDetails, comments: comments });
 
-    // const onCommentSubmit = async (e) => {
-    //     e.preventDefault();
-    //
-    //     const result = await gameService.addComment(gameId, {
-    //         username,
-    //         comment,
-    //     });
-    //
-    //     setGame(state => ({ ...state, comments: { ...state.comments, [result._id]: result } }));
-    //     setUsername('');
-    //     setComment('');
-    // };
+        } catch (error) {
+            console.error("Failed to fetch game details and comments: ", error);
+        }
+    };
+
+    fetchGameDetailsAndComments();
+}, [gameId]);
+
+    useEffect(() => {
+      console.log(game.comments);
+    }, [game.comments]);
+
 
     const onCommentSubmit = async (e) => {
-      e.preventDefault();
+          e.preventDefault();
 
-      try {
-        const result = await gameService.addComment(gameId, {
-          username,
-          comment,
-        });
-        console.log('huiiiiiiiii')
-        console.log(result);  // Log here
+          const commentData = {
+            username: `${userEmail} - ${username}`,
+            comment,
+            gameId,
+          };
 
-        setGame(state => ({ ...state, comments: { ...state.comments, [result._id]: result } }));
-        setUsername('');
-        setComment('');
-      } catch (error) {
-        console.error("ERRRRRRROOOORRRR"); // or wherever you want to display the error
-      }
+          try {
+            const result = await gameService.addComment(commentData);
+
+            // This assumes that result = { username: '', comment: '' }
+            if(result && result.username && result.comment) {
+              setGame(state => ({
+                ...state,
+                comments: [...state.comments, {username: `${userEmail} - ${username}`, comment: commentData.comment}]
+              }));
+            }
+
+            setUsername('');
+            setComment('');
+
+          } catch (error) {
+            console.error("ERRRRRRROOOORRRR");
+          }
     };
 
     const isOwner = game._ownerId === userId;
@@ -60,11 +72,10 @@ export const DetailsGame = ({onGameDeleteSubmit}) => {
 
     return (
         <section id="game-details">
-            <h1>DETAILS GAME</h1>
             <div className="info-section">
 
                 <div className="game-header">
-                    <img className="game-img" src={game.imageUrl} />
+                    <img className="game-img" src={game.imageUrl}/>
                     <h1>{game.title}</h1>
                     <span className="levels">MAX LEVEL: {game.maxLevel}</span>
                     <p className="type">{game.category}</p>
@@ -72,23 +83,20 @@ export const DetailsGame = ({onGameDeleteSubmit}) => {
 
                 <p className="text">{game.summary}</p>
 
-                <div className="details-comments">
-                    <h2>COMMENTS:</h2>
-                    <ul>
-                        <li><h5>Huiiiiiiiiiiii</h5></li>
-                        {game.comments && Object.values(game.comments).map(x => (
-                            <li key={x._id} className="comment">
-                                <p>{x.username}: {x.comment}</p>
-                            </li>
-                        ))}
-                    </ul>
+                {isAuthenticated && (
+                    <div className="details-comments">
+                        <h2>COMMENTS:</h2>
+                        <ul>
+                            {game.comments && game.comments.map((comment, index) => (
+                                <li key={index} className="comment">
+                                    <p>{comment.username}: {comment.comment}</p>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                )}
 
-                    {/* {!Object.values(game.comments).length && (
-                        <p className="no-comment">No comments.</p>
-                    )} */}
-                </div>
 
-                {/* <!-- Edit/Delete buttons ( Only for creator of this game )  --> */}
                 {isOwner && (
                     <div className="buttons">
                         <Link to={`/catalog/${game._id}/edit`} className="button">EDIT</Link>
@@ -97,16 +105,21 @@ export const DetailsGame = ({onGameDeleteSubmit}) => {
                 )}
             </div>
 
-            {/* <!-- Bonus --> */}
-            {/* <!-- Add Comment ( Only for logged-in users, which is not creators of the current game ) --> */}
-            <article className="create-comment">
-                <label>Comment:</label>
-                <form className="form" onSubmit={onCommentSubmit}>
-                    <input type="text" name="username" placeholder='Your name' value={username} onChange={(e) => setUsername(e.target.value)} />
-                    <textarea name="comment" placeholder="Comment......" value={comment} onChange={(e) => setComment(e.target.value)}></textarea>
-                    <input className="btn submit" type="submit" value="Add Comment" />
-                </form>
-            </article>
+
+            {isLoggedIn && (
+                <div className="comment-box">
+                    <article className="create-comment">
+                        <label>Comment:</label>
+                        <form className="form" onSubmit={onCommentSubmit}>
+                            <input type="text" name="username" placeholder='Your name' value={username}
+                                   onChange={(e) => setUsername(e.target.value)} required/>
+                            <textarea name="comment" placeholder="Comment......" value={comment}
+                                      onChange={(e) => setComment(e.target.value)} required></textarea>
+                            <input className="btn submit" type="submit" value="Add Comment"/>
+                        </form>
+                    </article>
+                </div>
+            )}
 
         </section>
     );

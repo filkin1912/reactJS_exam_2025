@@ -1,6 +1,7 @@
-import * as request from './requester';
+import {requestFactory} from "./requester";
 
 const baseUrl = 'http://localhost:3030/jsonstore/comments';
+const request = requestFactory();
 
 export const getAll = async (gameId) => {
     const query = encodeURIComponent(`gameId="${gameId}"`);
