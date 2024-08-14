@@ -13,6 +13,7 @@ export const UserDetails = ({onUserEditSubmit,}) => {
     // const userId = useParams();
     const userDataService = useService(userServiceFactory);
     const {values, changeHandler, onSubmit, changeValues} = useForm({
+        _id: '',
         nationality: '',
         age: '',
         imageUrl: '',
@@ -20,10 +21,13 @@ export const UserDetails = ({onUserEditSubmit,}) => {
 
 
     useEffect(() => {
-        userDataService.additionalInfo(userId)
-            .then(result => {
-                changeValues(result);
-            });
+        if (userId) {
+            userDataService.additionalInfoByOwnerId(userId)
+                .then(result => {
+
+                    changeValues(result);
+                });
+        }
     }, [userId]);
 
     return (

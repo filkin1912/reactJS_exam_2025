@@ -618,7 +618,6 @@
     }
 
     function post(context, tokens, query, body) {
-    function post(context, tokens, query, body) {
         console.log('Request body:\n', body);
 
         validateRequest(context, tokens);
@@ -834,7 +833,7 @@
     function createInstance(seedData = {}) {
         const collections = new Map();
 
-        // Initialize seed data from file    
+        // Initialize seed data from file
         for (let collectionName in seedData) {
             if (seedData.hasOwnProperty(collectionName)) {
                 const collection = new Map();
@@ -1287,7 +1286,7 @@
                     propRules = ruleOrDefault(propRules, getPropRule(allPropRules, action));
                 }
 
-                // Rules by record id 
+                // Rules by record id
                 const recordRules = collectionRules[data._id];
                 if (recordRules !== undefined) {
                     currentRule = ruleOrDefault(currentRule, recordRules[action]);
@@ -1364,7 +1363,7 @@
             }
         },
         comments: {
-        
+
         }
     };
     var rules$1 = {

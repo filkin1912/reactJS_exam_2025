@@ -21,12 +21,13 @@ export const Header = ({onSearch}) => {
                                 <li className="nav-item active">
                                     <Link className="nav-link" to={'/'}>Home <span className="sr-only">(current)</span></Link>
                                 </li>
-                                <li className="nav-item">
-                                    <Link className="nav-link" to={'/catalog'}> Catalog </Link>
-                                </li>
+
 
                                 {isAuthenticated && (
                                     <>
+                                        <li className="nav-item">
+                                            <Link className="nav-link" to={'/catalog'}> Catalog </Link>
+                                        </li>
                                         <li className="nav-item">
                                             <Link className="nav-link" to={'/create'}> Create game </Link>
                                         </li>
@@ -38,6 +39,7 @@ export const Header = ({onSearch}) => {
                                         </li>
                                     </>
                                 )}
+
 
                                 {!isAuthenticated && (
                                     <>

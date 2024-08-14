@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import {Routes, Route, useNavigate, useLocation} from "react-router-dom";
+import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 
 import { gameServiceFactory } from "./services/gameService";
 import { authServiceFactory } from "./services/authService";
@@ -31,16 +31,29 @@ function App() {
   const userService = userServiceFactory(auth.accessToken);
 
 
-  useEffect(() => {
-  if(location.pathname !== '/catalog') {
-    setFilteredGames([]);
-  }
+//   useEffect(() => {
+//       if(location.pathname !== '/catalog') {
+//         setFilteredGames([]);
+//   }
+//
+//   gameService.getAll()
+//     .then(result => {
+//         setGames(result)
+//     })
+// }, [location]);
+   useEffect(() => {
+      if(location.pathname !== '/catalog') {
+        setFilteredGames([]);
+      }
 
-  gameService.getAll()
-    .then(result => {
-        setGames(result)
-    })
-}, [location]);
+      if(auth.accessToken){
+        gameService.getAll()
+        .then(result => {
+            setGames(result)
+        })
+      }
+
+  }, [location, auth.accessToken]);
 
   const handleSearch = (searchTerm) => {
     const results = games.filter(game =>
@@ -97,11 +110,11 @@ function App() {
     try {
       const authService = authServiceFactory(auth.accessToken);
       await authService.logout();
+      setAuth({});
     } catch (error) {
       console.error("Logout error: ", error); // have a look at the error message being printed here
     }
 
-    setAuth({});
     navigate('/');
   };
 
@@ -116,11 +129,16 @@ function App() {
 
   const onUserEditSubmit = async (values) => {
     console.log(`___________BEFORE SERVER____________`);
-
-    const result = await userService.update(values._ownerId, values);
+    console.log(values._id);
+    const result = await userService.update(values._id, values);
     console.log(result);
-
-    navigate(`/`);
+    if (result && result._id) {
+      alert("Details updated");
+      navigate('/catalog');
+    } else {
+      console.log('ERRRROOORRR!')
+    }
+    // navigate(`/details/${values._ownerId}`);
   };
 
   const onGameDeleteSubmit = async (gameId) => {

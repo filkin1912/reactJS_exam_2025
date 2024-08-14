@@ -22,22 +22,17 @@ const request = async (method, token, url, data) => {
 
     const response = await fetch(url, options);
 
+
     if (response.status === 404) {
         throw new Error(`Not Found: The URL ${url} does not exist.`);
     }
-    //
-    // if (response.statusCode === 204) {
-    //     return {};
-    // }
-    //
-    // const result = await response.json();
-    //
-    // if (!response.ok) {
-    //     throw result;
-    // }
+    if (response.status === 403 && response.url === 'http://localhost:3030/data/games') {
+        return {};
+    }
     if (response.status === 204) {
         return {};
     }
+
 
     let result;
 

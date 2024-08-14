@@ -1,11 +1,15 @@
+import {useContext} from "react";
+import {AuthContext} from "../../context/AuthContext";
 
 export const Home = ({ games }) => {
 
     const latestGames = games ? games.slice(-3) : [];
+    const { isAuthenticated, } = useContext(AuthContext);
 
     return (
         <section id="home-page">
-            <h1>Latest Games</h1>
+            {isAuthenticated && (<h1>Latest added Games</h1>)}
+            {!isAuthenticated && (<h1>To see all games, please login or register</h1>)}
             <div style={{
                 display: "flex",
                 justifyContent: "space-between",
