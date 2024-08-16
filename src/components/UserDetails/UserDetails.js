@@ -1,17 +1,15 @@
-import React, {useState, useEffect, useContext} from "react";
+import React, {useEffect, useContext} from "react";
 import {AuthContext} from "../../context/AuthContext";
-import {authServiceFactory} from "../../services/authService";
 import {useForm} from "../../hooks/useForm";
-import {useParams} from "react-router-dom";
 import {useService} from "../../hooks/useService";
 import {userServiceFactory} from "../../services/userService";
 
-export const UserDetails = ({onUserEditSubmit,}) => {
 
-    const { userEmail, userId } = useContext(AuthContext);
+export const UserDetails = () => {
 
-    // const userId = useParams();
+    const { userEmail, userId, onUserEditSubmit } = useContext(AuthContext);
     const userDataService = useService(userServiceFactory);
+
     const {values, changeHandler, onSubmit, changeValues} = useForm({
         _id: '',
         nationality: '',
@@ -21,13 +19,16 @@ export const UserDetails = ({onUserEditSubmit,}) => {
 
 
     useEffect(() => {
+
         if (userId) {
             userDataService.additionalInfoByOwnerId(userId)
                 .then(result => {
-
-                    changeValues(result);
+                    console.log('USE EFFECT RESULT')
+                    console.log(result)
+                    changeValues({ ...result });
                 });
         }
+        console.log('HUIAAAAA');
     }, [userId]);
 
     return (

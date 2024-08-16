@@ -1,10 +1,12 @@
 import {useContext} from "react";
 import {AuthContext} from "../../context/AuthContext";
+import {useGameContext} from "../../context/GameContext";
 
-export const Home = ({ games }) => {
+export const Home = () => {
 
+    const {games} = useGameContext();
     const latestGames = games ? games.slice(-3) : [];
-    const { isAuthenticated, } = useContext(AuthContext);
+    const {isAuthenticated,} = useContext(AuthContext);
 
     return (
         <section id="home-page">

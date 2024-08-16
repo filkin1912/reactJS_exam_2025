@@ -1,9 +1,10 @@
 import { Game } from "./Game/Game";
-export const Catalog = ({
-    games,
-    filteredGames
-}) => {
+import {useGameContext} from "../../context/GameContext";
 
+export const Catalog = () => {
+
+    const {games} = useGameContext();
+    const {filteredGames} = useGameContext();
     const gamesToDisplay = filteredGames.length > 0 ? filteredGames : games;
 
     return (

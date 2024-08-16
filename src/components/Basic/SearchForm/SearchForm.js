@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
+import {useGameContext} from "../../../context/GameContext";
 
-export const SearchForm = ({onSearch}) => {
+export const SearchForm = () => {
 
-
+    const {handleSearch} = useGameContext();
     const [searchTerm, setSearchTerm] = useState('');
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        onSearch(searchTerm);
+        handleSearch(searchTerm);
     };
 
     return (

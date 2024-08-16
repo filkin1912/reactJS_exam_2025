@@ -1,19 +1,20 @@
 import './EditGame.css';
 
-import { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import {useEffect} from "react";
+import {useParams} from "react-router-dom";
 
-import { useForm } from "../../hooks/useForm";
-import { useService } from "../../hooks/useService";
-import { gameServiceFactory } from "../../services/gameService";
+import {useForm} from "../../hooks/useForm";
+import {useService} from "../../hooks/useService";
+import {gameServiceFactory} from "../../services/gameService";
+import {useGameContext} from "../../context/GameContext";
 
 
+export const EditGame = () => {
 
-export const EditGame = ({ onGameEditSubmit,}) => {
-
-    const { gameId } = useParams();
+    const {onGameEditSubmit} = useGameContext();
+    const {gameId} = useParams();
     const gameService = useService(gameServiceFactory);
-    const { values, changeHandler, onSubmit, changeValues } = useForm({
+    const {values, changeHandler, onSubmit, changeValues} = useForm({
         _id: '',
         title: '',
         category: '',
@@ -29,7 +30,7 @@ export const EditGame = ({ onGameEditSubmit,}) => {
             });
     }, [gameId]);
 
-    return(
+    return (
         <section id="edit-page" className="auth">
             <form id="edit" method="post" onSubmit={onSubmit}>
                 <div className="container">
@@ -75,7 +76,7 @@ export const EditGame = ({ onGameEditSubmit,}) => {
                     <label htmlFor="summary">SUMMARY:</label>
                     <textarea name="summary" id="summary" value={values.summary} onChange={changeHandler}></textarea>
 
-                    <input className="btn submit" type="submit" value="EDIT GAME" />
+                    <input className="btn submit" type="submit" value="EDIT GAME"/>
 
                 </div>
             </form>

@@ -13,6 +13,20 @@ const request = async (method, token, url, data) => {
         }
     }
 
+    // const serializedAuth = localStorage.getItem('authKey');
+
+    // if (serializedAuth) {
+    //     const auth = JSON.parse(serializedAuth);
+    //     token = auth.accessToken;
+    //     if (token) {
+    //         options.headers = {
+    //             ...options.headers,
+    //             'X-Authorization': token,
+    //         };
+    //     }
+    // }
+    // и може да махнем токна отвсякъде, той не е вече нужен!
+
     if (token) {
         options.headers = {
             ...options.headers,
@@ -36,7 +50,7 @@ const request = async (method, token, url, data) => {
 
     let result;
 
-    if(response.headers.get('Content-Type')?.includes('application/json')) {
+    if (response.headers.get('Content-Type')?.includes('application/json')) {
         result = await response.json();
     } else {
         result = await response.text();
@@ -50,6 +64,7 @@ const request = async (method, token, url, data) => {
 };
 
 export const requestFactory = (token) => {
+
     return {
         get: request.bind(null, 'GET', token),
         post: request.bind(null, 'POST', token),

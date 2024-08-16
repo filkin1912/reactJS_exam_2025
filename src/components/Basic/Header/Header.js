@@ -1,19 +1,21 @@
 import {Link} from 'react-router-dom';
-import { useContext } from 'react';
-import { useLocation } from 'react-router-dom';
+import {useContext} from 'react';
+import {useLocation} from 'react-router-dom';
 import {SearchForm} from "../SearchForm/SearchForm";
-import { AuthContext } from '../../../context/AuthContext';
+import {AuthContext} from '../../../context/AuthContext';
+import {useGameContext} from "../../../context/GameContext";
 
-export const Header = ({onSearch}) => {
-    const { isAuthenticated, userId } = useContext(AuthContext);
+export const Header = () => {
+    const {handleSearch} = useGameContext();
+    const {isAuthenticated, userId} = useContext(AuthContext);
     const location = useLocation();
 
-    return(
+    return (
         <header className="header_section">
-    
+
             <div className="container-fluid">
                 <nav className="navbar navbar-expand-lg custom_nav-container pt-3">
-        
+
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
                         <div className="d-flex  flex-column flex-lg-row align-items-center w-100 justify-content-between">
                             <ul className="navbar-nav  ">
@@ -43,7 +45,7 @@ export const Header = ({onSearch}) => {
 
                                 {!isAuthenticated && (
                                     <>
-                                    <li className="nav-item">
+                                        <li className="nav-item">
                                             <Link className="nav-link" to={'/register'}> Register </Link>
                                         </li>
 
@@ -54,8 +56,8 @@ export const Header = ({onSearch}) => {
                                 )}
 
                             </ul>
-                            {location.pathname === '/catalog' && <SearchForm onSearch={onSearch}/>}
-                            
+                            {location.pathname === '/catalog' && <SearchForm onSearch={handleSearch}/>}
+
                         </div>
                     </div>
                 </nav>

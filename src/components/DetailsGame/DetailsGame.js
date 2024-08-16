@@ -1,16 +1,18 @@
-import { useEffect, useState, useContext } from 'react';
-import { useParams, useNavigate, Link } from 'react-router-dom';
+import {useEffect, useState, useContext} from 'react';
+import {useParams, useNavigate, Link} from 'react-router-dom';
 
-import { gameServiceFactory } from '../../services/gameService';
+import {gameServiceFactory} from '../../services/gameService';
 import * as commentService from '../../services/commentService';
-import { useService } from '../../hooks/useService';
-import { AuthContext } from '../../context/AuthContext';
+import {useService} from '../../hooks/useService';
+import {AuthContext} from '../../context/AuthContext';
+import {useGameContext} from "../../context/GameContext";
 
-export const DetailsGame = ({onGameDeleteSubmit}) => {
-    const { userId, userEmail, isAuthenticated } = useContext(AuthContext);
+export const DetailsGame = () => {
+    const {onGameDeleteSubmit} = useGameContext();
+    const {userId, userEmail, isAuthenticated} = useContext(AuthContext);
     const [username, setUsername] = useState('');
     const [comment, setComment] = useState('');
-    const { gameId } = useParams();
+    const {gameId} = useParams();
     const [game, setGame] = useState({});
     const gameService = useService(gameServiceFactory)
     const navigate = useNavigate();
@@ -18,56 +20,58 @@ export const DetailsGame = ({onGameDeleteSubmit}) => {
 
 
     useEffect(() => {
-    const fetchGameDetailsAndComments = async () => {
-        try {
-            const gameDetails = await gameService.getOne(gameId)
-            const allComments = await commentService.getAll(gameId)
-            const comments = allComments.filter(comment => comment.gameId === gameId);
-            setGame({ ...gameDetails, comments: comments });
+        const fetchGameDetailsAndComments = async () => {
+            try {
+                const gameDetails = await gameService.getOne(gameId)
+                const allComments = await commentService.getAll(gameId)
+                const comments = allComments.filter(comment => comment.gameId === gameId);
+                setGame({...gameDetails, comments: comments});
 
-        } catch (error) {
-            console.error("Failed to fetch game details and comments: ", error);
-        }
-    };
+            } catch (error) {
+                console.error("Failed to fetch game details and comments: ", error);
+            }
+        };
 
-    fetchGameDetailsAndComments();
-}, [gameId]);
+        fetchGameDetailsAndComments();
+    }, [gameId]);
 
     useEffect(() => {
-      console.log(game.comments);
+        console.log(game.comments);
     }, [game.comments]);
 
 
     const onCommentSubmit = async (e) => {
-          e.preventDefault();
+        e.preventDefault();
 
-          const commentData = {
+        const commentData = {
             username: `${userEmail} - ${username}`,
             comment,
             gameId,
-          };
+        };
 
-          try {
+        try {
             const result = await gameService.addComment(commentData);
 
             // This assumes that result = { username: '', comment: '' }
-            if(result && result.username && result.comment) {
-              setGame(state => ({
-                ...state,
-                comments: [...state.comments, {username: `${userEmail} - ${username}`, comment: commentData.comment}]
-              }));
+            if (result && result.username && result.comment) {
+                setGame(state => ({
+                    ...state,
+                    comments: [...state.comments, {
+                        username: `${userEmail} - ${username}`,
+                        comment: commentData.comment
+                    }]
+                }));
             }
 
             setUsername('');
             setComment('');
 
-          } catch (error) {
+        } catch (error) {
             console.error("ERRRRRRROOOORRRR");
-          }
+        }
     };
 
     const isOwner = game._ownerId === userId;
-
 
 
     return (

@@ -1,14 +1,14 @@
 import './Register.css';
-import { useContext } from "react";
+import {useContext} from "react";
 
-import { useForm } from "../../hooks/useForm";
-import { AuthContext } from "../../context/AuthContext";
+import {useForm} from "../../hooks/useForm";
+import {AuthContext} from "../../context/AuthContext";
 
 export const Register = () => {
 
-    const { onRegisterSubmit } = useContext(AuthContext);
+    const {onRegisterSubmit} = useContext(AuthContext);
 
-    const { values, changeHandler, onSubmit } = useForm({
+    const {values, changeHandler, onSubmit} = useForm({
         email: '',
         password: '',
         confirmPassword: '',
@@ -48,7 +48,7 @@ export const Register = () => {
                         onChange={changeHandler}
                     />
 
-                    <input className="btn submit" type="submit" value="REGISTER" />
+                    <input className="btn submit" type="submit" value="REGISTER"/>
                 </div>
             </form>
         </section>
