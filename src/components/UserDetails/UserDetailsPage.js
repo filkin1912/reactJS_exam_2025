@@ -3,14 +3,15 @@ import {AuthContext} from "../../context/AuthContext";
 import {userServiceFactory} from "../../services/userService";
 
 export const UserDetailsPage = () => {
-    const {token, userId} = useContext(AuthContext);
+    const {token, userId, userEmail} = useContext(AuthContext);
     const userService = userServiceFactory(token, userId);
     const [userDetails, setUserDetails] = useState([]);
 
 
     useEffect(() => {
-        userService.additionalInfo(userId)
+        userService.additionalInfoByOwnerId(userId)
             .then(result => {
+                console.log(result)
                 setUserDetails(result);
             });
     }, []);
@@ -18,20 +19,17 @@ export const UserDetailsPage = () => {
 
     return (
         <div>
-            {userDetails.flatMap(userObj =>
-                Object.entries(userObj).map(([id, user]) =>
-                    <section key={id} id="edit-page" className="auth">
-                        <form id="edit" method="post">
-                            <div className="container">
-                                <h1>EMAIL: {user.email}</h1>
-                                <label htmlFor="leg-title">NATIONALITY: {userDetails.nationality}</label>
-                                <label htmlFor="levels">AGE: {userDetails.age}</label>
-                                <label htmlFor="game-img">IMAGE: {userDetails.imageUrl}</label>
-                            </div>
-                        </form>
-                    </section>
-                ))
-            }
+            <section id="edit-page" className="auth">
+                <form id="edit" method="post">
+                    <div className="container">
+                        <h1>EMAIL: {userEmail}</h1>
+                        <label htmlFor="leg-title">NATIONALITY: {userDetails.nationality}</label>
+                        <label htmlFor="levels">AGE: {userDetails.age}</label>
+                        {/*<label htmlFor="game-img">IMAGE: {userDetails.imageUrl}</label>*/}
+                        <img className="game-img" src={userDetails.imageUrl}/>
+                    </div>
+                </form>
+            </section>
         </div>
     );
 };

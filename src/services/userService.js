@@ -34,24 +34,6 @@ export const userServiceFactory = (token) => {
         }
     };
 
-    const additionalInfo = async (userId) => {
-        try {
-            const result = await request.get(`${baseUrl}/${userId}`);
-            const info = Object.values(result);
-            return info;
-
-        } catch (error) {
-            console.error("No additional info: ", error);
-            if (error.message.includes('Not Found')) {
-
-                const initialData = await createInitialDetails();
-                return initialData;
-
-            } else {
-                throw error;
-            }
-        }
-    };
 
     const update = async (userId, data) => {
         try {
@@ -72,7 +54,6 @@ export const userServiceFactory = (token) => {
     };
 
     return {
-        additionalInfo,
         additionalInfoByOwnerId,
         update,
     };

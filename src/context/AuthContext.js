@@ -62,7 +62,8 @@ export const AuthProvider = ({children}) => {
 
         if (result && result._id) {
             alert("Details updated");
-            navigate('/catalog');
+            // navigate('/catalog');
+            navigate("/user-details");
 
         } else {
             console.log('ERRRROOORRR!')
