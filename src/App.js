@@ -43,9 +43,9 @@ function App() {
                                 <UserDetails/>
                             </RouteGuard>}/>
                         <Route path="/user-details" element={
-                            // <RouteGuard>
-                                <UserDetailsPage/>}/>
-                             {/*</RouteGuard>*/}
+                            <RouteGuard>
+                                <UserDetailsPage/>
+                             </RouteGuard>}/>
                         <Route path="/create" element={
                             <RouteGuard>
                                 <CreateGame/>

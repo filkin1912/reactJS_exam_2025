@@ -25,7 +25,6 @@ export const UserDetailsPage = () => {
                         <h1>EMAIL: {userEmail}</h1>
                         <label htmlFor="leg-title">NATIONALITY: {userDetails.nationality}</label>
                         <label htmlFor="levels">AGE: {userDetails.age}</label>
-                        {/*<label htmlFor="game-img">IMAGE: {userDetails.imageUrl}</label>*/}
                         <img className="game-img" src={userDetails.imageUrl}/>
                     </div>
                 </form>
