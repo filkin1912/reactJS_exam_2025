@@ -29,10 +29,7 @@ function App() {
 
                     <Routes>
                         <Route path="/" element={<Home/>}/>
-                        <Route path="/catalog" element={
-                            <RouteGuard>
-                                <Catalog/>
-                            </RouteGuard>}/>
+                        <Route path="/catalog" element={<Catalog/>}/>
                         <Route path='/catalog/:gameId' element={
                             <RouteGuard>
                                 <DetailsGame/>
