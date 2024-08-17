@@ -23,12 +23,9 @@ export const UserDetails = () => {
         if (userId) {
             userDataService.additionalInfoByOwnerId(userId)
                 .then(result => {
-                    console.log('USE EFFECT RESULT')
-                    console.log(result)
                     changeValues({ ...result });
                 });
         }
-        console.log('HUIAAAAA');
     }, [userId]);
 
     return (

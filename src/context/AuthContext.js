@@ -20,8 +20,6 @@ export const AuthProvider = ({children}) => {
             const result = await authService.login(data);
 
             setAuth(result);
-            console.log(result);
-            console.log(result._id);
 
             navigate("/catalog");
         } catch (error) {
@@ -37,10 +35,9 @@ export const AuthProvider = ({children}) => {
 
         try {
             const result = await authService.register(registerData);
-
             setAuth(result);
-
             navigate("/catalog");
+
         } catch (error) {
             console.log("There is a problem");
         }
@@ -51,29 +48,25 @@ export const AuthProvider = ({children}) => {
             const authService = authServiceFactory(auth.accessToken);
             await authService.logout();
             setAuth({});
+
         } catch (error) {
             console.error("Logout error: ", error);
         }
-
         navigate('/');
     };
 
 
     const onUserEditSubmit = async (values) => {
-        console.log(`___________BEFORE SERVER____________`);
-        console.log(values);
-        console.log(values._id);
+
         const result = await userService.update(values._id, values);
-        console.log(`___________AFTER SERVER____________`);
-        console.log(result._id);
-        console.log(result);
+
         if (result && result._id) {
             alert("Details updated");
             navigate('/catalog');
+
         } else {
             console.log('ERRRROOORRR!')
         }
-        // navigate(`/details/${values._ownerId}`);
     };
 
 
