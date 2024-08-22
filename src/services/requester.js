@@ -46,6 +46,9 @@ const request = async (method, token, url, data) => {
     if (response.status === 204) {
         return {};
     }
+    if (response.status === 401) {
+        throw new Error('Unauthorized: Invalid token.');
+    }
 
 
     let result;

@@ -38,6 +38,9 @@ export const Header = () => {
                                             <Link className="nav-link" to={`/details/${userId}`}>Details</Link>
                                         </li>
                                         <li className="nav-item">
+                                            <Link className="nav-link" to={'/bought-games'}>Bought Games</Link>
+                                        </li>
+                                        <li className="nav-item">
                                             <Link className="nav-link" to={'/logout'}>Logout</Link>
                                         </li>
                                     </>
@@ -57,7 +60,7 @@ export const Header = () => {
                                 )}
 
                             </ul>
-                            {location.pathname === '/catalog' && <SearchForm onSearch={handleSearch}/>}
+                            {location.pathname === '/catalog' && isAuthenticated && <SearchForm onSearch={handleSearch}/>}
 
                         </div>
                     </div>

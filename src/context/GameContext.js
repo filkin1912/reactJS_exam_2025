@@ -20,12 +20,12 @@ export const GameProvider = ({children}) => {
         if (location.pathname !== '/catalog') {
             setFilteredGames([]);
         }
-        if (token) {
+        // if (token) {
             gameService.getAll()
                 .then(result => {
                     setGames(result)
                 })
-        }
+        // }
     }, [location, token]);
 
     const handleSearch = (searchTerm) => {

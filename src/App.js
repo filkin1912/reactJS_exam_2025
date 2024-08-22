@@ -18,45 +18,50 @@ import {Catalog} from "./components/Catalog/Catalog";
 import {DetailsGame} from "./components/DetailsGame/DetailsGame";
 
 import {RouteGuard} from "./components/Basic/RouteGuard/RouteGuard";
+import {BoughtGamesProvider} from "./context/BoughtGamesContext";
+import {BoughtGames} from "./components/BoughtGames/BoughtGames";
 
 function App() {
 
     return (
         <AuthProvider>
             <GameProvider>
-                <div>
-                    <Header/>
+                <BoughtGamesProvider>
+                    <div>
+                        <Header/>
 
-                    <Routes>
-                        <Route path="/" element={<Home/>}/>
-                        <Route path="/catalog" element={<Catalog/>}/>
-                        <Route path='/catalog/:gameId' element={
-                            <RouteGuard>
-                                <DetailsGame/>
-                            </RouteGuard>}/>
-                        <Route path="/catalog/:gameId/edit" element={
-                            <RouteGuard>
-                                <EditGame/>
-                            </RouteGuard>}/>
-                        <Route path="/details/:userId" element={
-                            <RouteGuard>
-                                <UserDetails/>
-                            </RouteGuard>}/>
-                        <Route path="/user-details" element={
-                            <RouteGuard>
-                                <UserDetailsPage/>
-                             </RouteGuard>}/>
-                        <Route path="/create" element={
-                            <RouteGuard>
-                                <CreateGame/>
-                            </RouteGuard>}/>
-                        <Route path="/register" element={<Register/>}/>
-                        <Route path="/logout" element={<Logout/>}/>
-                        <Route path="/login" element={<Login/>}/>
-                    </Routes>
+                        <Routes>
+                            <Route path="/" element={<Home/>}/>
+                            <Route path="/catalog" element={<Catalog/>}/>
+                            <Route path='/catalog/:gameId' element={
+                                <RouteGuard>
+                                    <DetailsGame/>
+                                </RouteGuard>}/>
+                            <Route path="/catalog/:gameId/edit" element={
+                                <RouteGuard>
+                                    <EditGame/>
+                                </RouteGuard>}/>
+                            <Route path="/bought-games" element={<BoughtGames />}/>
+                            <Route path="/details/:userId" element={
+                                <RouteGuard>
+                                    <UserDetails/>
+                                </RouteGuard>}/>
+                            <Route path="/user-details" element={
+                                <RouteGuard>
+                                    <UserDetailsPage/>
+                                </RouteGuard>}/>
+                            <Route path="/create" element={
+                                <RouteGuard>
+                                    <CreateGame/>
+                                </RouteGuard>}/>
+                            <Route path="/register" element={<Register/>}/>
+                            <Route path="/logout" element={<Logout/>}/>
+                            <Route path="/login" element={<Login/>}/>
+                        </Routes>
 
-                    <Footer/>
-                </div>
+                        <Footer/>
+                    </div>
+                </BoughtGamesProvider>
             </GameProvider>
         </AuthProvider>
     );

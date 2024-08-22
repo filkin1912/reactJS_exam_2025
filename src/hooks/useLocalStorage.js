@@ -1,7 +1,10 @@
 import {useEffect, useState} from "react";
 
 export const useLocalStorage = (key, initialValue) => {
-    const [state, setState] = useState(initialValue);
+    const [state, setState] = useState(() => {
+        const persistedStateSerialized = localStorage.getItem(key);
+        return persistedStateSerialized ? JSON.parse(persistedStateSerialized) : initialValue;
+    });
 
     useEffect(() => {
         const persistedStateSerialized = localStorage.getItem(key);

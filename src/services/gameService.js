@@ -5,9 +5,10 @@ const baseUrl = 'http://localhost:3030/data/games';
 
 export const gameServiceFactory = (token) => {
     const request = requestFactory(token);
+    const requestWithoutToken = requestFactory();
 
     const getAll = async () => {
-        const result = await request.get(baseUrl);
+        const result = await requestWithoutToken.get(baseUrl);
         const games = Object.values(result);
 
         return games;

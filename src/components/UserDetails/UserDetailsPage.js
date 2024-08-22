@@ -20,14 +20,24 @@ export const UserDetailsPage = () => {
     return (
         <div>
             <section id="edit-page" className="auth">
-                <form id="edit" method="post">
-                    <div className="container">
-                        <h1>EMAIL: {userEmail}</h1>
+                <div className="container" style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    margin: '10px'
+                }}>
+
+                    <div className="text-container" style={{
+                        paddingLeft: "0px",
+                    }}>
+                        <label>EMAIL: {userEmail}</label>
                         <label htmlFor="leg-title">NATIONALITY: {userDetails.nationality}</label>
                         <label htmlFor="levels">AGE: {userDetails.age}</label>
-                        <img className="game-img" src={userDetails.imageUrl}/>
                     </div>
-                </form>
+
+                    <img className="game-img" src={userDetails.imageUrl}/>
+                </div>
             </section>
         </div>
     );
