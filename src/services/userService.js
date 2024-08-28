@@ -7,11 +7,23 @@ export const userServiceFactory = (token) => {
     const request = requestFactory(token);
 
 
+    const getUser = async (loggedUserId) => {
+        try {
+            const res = await request.get(baseUrl);
+            const currentUserData = res.filter(el => el._ownerId === loggedUserId);
+            return currentUserData[0];
+        } catch (err) {
+            console.error(`Cannot get user with id ${loggedUserId}.`, err);
+        }
+    };
+
+
     const createInitialDetails = async () => {
         const data = {
             nationality: '',
             age: '',
             imageUrl: '',
+            money: '',
         };
 
         const result = await request.post(baseUrl, data);
@@ -54,6 +66,7 @@ export const userServiceFactory = (token) => {
     };
 
     return {
+        getUser,
         additionalInfoByOwnerId,
         update,
     };

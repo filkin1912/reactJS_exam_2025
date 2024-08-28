@@ -1,6 +1,7 @@
 import React, {useContext, useEffect, useState} from "react";
 import {AuthContext} from "../../context/AuthContext";
 import {userServiceFactory} from "../../services/userService";
+import {Link} from "react-router-dom";
 
 export const UserDetailsPage = () => {
     const {token, userId, userEmail} = useContext(AuthContext);
@@ -34,9 +35,12 @@ export const UserDetailsPage = () => {
                         <label>EMAIL: {userEmail}</label>
                         <label htmlFor="leg-title">NATIONALITY: {userDetails.nationality}</label>
                         <label htmlFor="levels">AGE: {userDetails.age}</label>
+                        <label htmlFor="levels">MONEY: {userDetails.money}</label>
                     </div>
 
                     <img className="game-img" src={userDetails.imageUrl}/>
+
+                    <Link className="btn submit" id="btn" to={`/user-details`}>Edit Details</Link>
                 </div>
             </section>
         </div>

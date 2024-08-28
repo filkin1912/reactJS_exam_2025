@@ -1,5 +1,4 @@
 import React, {useEffect, useContext} from "react";
-import {Link} from "react-router-dom";
 import {AuthContext} from "../../context/AuthContext";
 import {useForm} from "../../hooks/useForm";
 import {useService} from "../../hooks/useService";
@@ -8,7 +7,7 @@ import {userServiceFactory} from "../../services/userService";
 
 export const UserDetails = () => {
 
-    const { userEmail, userId, onUserEditSubmit } = useContext(AuthContext);
+    const {userEmail, userId, onUserEditSubmit} = useContext(AuthContext);
     const userDataService = useService(userServiceFactory);
 
     const {values, changeHandler, onSubmit, changeValues} = useForm({
@@ -16,6 +15,7 @@ export const UserDetails = () => {
         nationality: '',
         age: '',
         imageUrl: '',
+        money: 0,
     }, onUserEditSubmit);
 
 
@@ -24,7 +24,7 @@ export const UserDetails = () => {
         if (userId) {
             userDataService.additionalInfoByOwnerId(userId)
                 .then(result => {
-                    changeValues({ ...result });
+                    changeValues({...result});
                 });
         }
     }, [userId]);
@@ -63,8 +63,18 @@ export const UserDetails = () => {
                             value={values.imageUrl}
                             onChange={changeHandler}
                         />
+
+                        <label htmlFor="levels">MONEY:</label>
+                        <input
+                            type="number"
+                            id="money"
+                            name="money"
+                            min="1"
+                            value={values.money}
+                            onChange={changeHandler}
+                        />
+
                         <input className="btn submit" type="submit" value="SAVE"/>
-                        <Link className="btn submit" id="btn" to="/user-details">View Details</Link>
                     </div>
                 </form>
             </section>

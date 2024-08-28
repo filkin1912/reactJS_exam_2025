@@ -44,11 +44,11 @@ function App() {
                             <Route path="/bought-games" element={<BoughtGames />}/>
                             <Route path="/details/:userId" element={
                                 <RouteGuard>
-                                    <UserDetails/>
+                                    <UserDetailsPage/>
                                 </RouteGuard>}/>
                             <Route path="/user-details" element={
                                 <RouteGuard>
-                                    <UserDetailsPage/>
+                                    <UserDetails/>
                                 </RouteGuard>}/>
                             <Route path="/create" element={
                                 <RouteGuard>
