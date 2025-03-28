@@ -1,32 +1,28 @@
 import {createContext, useContext, useEffect, useState} from "react";
 import {gameServiceFactory} from "../services/gameService";
 import {useLocation, useNavigate} from "react-router-dom";
-import {AuthContext} from "./AuthContext";
 
 
-export const GameContext = createContext();
+export const GameContext = createContext('');
 
 export const GameProvider = ({children}) => {
-    const {token} = useContext(AuthContext);
     const location = useLocation();
     const navigate = useNavigate();
 
     const [games, setGames] = useState([]);
     const [filteredGames, setFilteredGames] = useState([]);
-    const gameService = gameServiceFactory(token);
+    const gameService = gameServiceFactory();
 
 
     useEffect(() => {
         if (location.pathname !== '/catalog') {
             setFilteredGames([]);
         }
-        // if (token) {
-            gameService.getAll()
-                .then(result => {
-                    setGames(result)
-                })
-        // }
-    }, [location, token]);
+        gameService.getAll()
+            .then(result => {
+                setGames(result)
+            })
+    }, [location, gameService]);
 
     const handleSearch = (searchTerm) => {
         const results = games.filter(game =>

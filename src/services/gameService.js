@@ -1,10 +1,9 @@
 import {requestFactory} from './requester';
-import * as commentService from '../services/commentService';
 
-const baseUrl = 'http://localhost:3030/data/games';
+const baseUrl = 'http://localhost:3030/jsonstore/games';
 
-export const gameServiceFactory = (token) => {
-    const request = requestFactory(token);
+export const gameServiceFactory = () => {
+    const request = requestFactory();
     const requestWithoutToken = requestFactory();
 
     const getAll = async () => {
@@ -16,10 +15,7 @@ export const gameServiceFactory = (token) => {
 
     const getOne = async (gameId) => {
         const result = await request.get(`${baseUrl}/${gameId}`);
-        // add this check
-        if (!result.comments) {
-            result.comments = [];
-        }
+
         return result;
     };
 
@@ -28,12 +24,6 @@ export const gameServiceFactory = (token) => {
 
         console.log(result);
 
-        return result;
-    };
-
-    const addComment = async (data) => {
-        const result = commentService.create(data);
-        console.log(result)
         return result;
     };
 
@@ -47,7 +37,6 @@ export const gameServiceFactory = (token) => {
         getOne,
         create,
         edit,
-        addComment,
         delete: deleteGame,
     };
 }
