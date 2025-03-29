@@ -6,13 +6,13 @@ export const useLocalStorage = (key, initialValue) => {
         return persistedStateSerialized ? JSON.parse(persistedStateSerialized) : initialValue;
     });
 
-    useEffect(() => {
-        const persistedStateSerialized = localStorage.getItem(key);
-        if (persistedStateSerialized) {
-            const persistedState = JSON.parse(persistedStateSerialized);
-            setState(persistedState);
-        }
-    }, [key]);
+    // useEffect(() => {
+    //     const persistedStateSerialized = localStorage.getItem(key);
+    //     if (persistedStateSerialized) {
+    //         const persistedState = JSON.parse(persistedStateSerialized);
+    //         setState(persistedState);
+    //     }
+    // }, [key]);
 
     const setLocalStorageState = (value) => {
         setState(value);

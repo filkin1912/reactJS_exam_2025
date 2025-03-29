@@ -6,6 +6,7 @@ export const Catalog = () => {
     const {filteredGames} = useGameContext();
     const gamesToDisplay = filteredGames.length > 0 ? filteredGames : games;
 
+
     return (
         <section id="catalog-page">
             <h1>All Games</h1>
