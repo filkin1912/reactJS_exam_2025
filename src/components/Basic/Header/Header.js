@@ -1,11 +1,13 @@
 import {Link} from 'react-router-dom';
+import {useContext} from 'react';
 import {useLocation} from 'react-router-dom';
 import {SearchForm} from "../SearchForm/SearchForm";
+import {AuthContext} from '../../../context/AuthContext';
 import {useGameContext} from "../../../context/GameContext";
 
 export const Header = () => {
     const {handleSearch} = useGameContext();
-
+    const {isAuthenticated, userId} = useContext(AuthContext);
     const location = useLocation();
 
     return (
@@ -24,13 +26,38 @@ export const Header = () => {
                                 <li className="nav-item">
                                     <Link className="nav-link" to={'/catalog'}> Catalog </Link>
                                 </li>
-                                <li className="nav-item">
-                                    <Link className="nav-link" to={'/create'}> Create game </Link>
-                                </li>
+
+
+                                {isAuthenticated && (
+                                    <>
+
+                                        <li className="nav-item">
+                                            <Link className="nav-link" to={'/create'}> Create game </Link>
+                                        </li>
+                                        <li className="nav-item">
+                                            <Link className="nav-link" to={`/details/${userId}`}>Details</Link>
+                                        </li>
+                                        <li className="nav-item">
+                                            <Link className="nav-link" to={'/logout'}>Logout</Link>
+                                        </li>
+                                    </>
+                                )}
+
+
+                                {!isAuthenticated && (
+                                    <>
+                                        <li className="nav-item">
+                                            <Link className="nav-link" to={'/register'}> Register </Link>
+                                        </li>
+
+                                        <li className="nav-item">
+                                            <Link className="nav-link" to={'/Login'}> Login </Link>
+                                        </li>
+                                    </>
+                                )}
 
                             </ul>
-
-                            {location.pathname === '/catalog' && <SearchForm onSearch={handleSearch}/>}
+                            {location.pathname === '/catalog' && isAuthenticated && <SearchForm onSearch={handleSearch}/>}
 
                         </div>
                     </div>
