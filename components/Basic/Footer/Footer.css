@@ -1,0 +1,22 @@
+.footer_section {
+  position: relative;
+
+  bottom: 0;
+  background-color: #121111;
+
+  font-weight: 700;
+}
+
+.footer_section p {
+  color: #fbfcfd;
+  margin: 0;
+  text-align: center;
+  padding: 20px;
+  border-top: 1px solid #9b9b9b;
+  width: 65%;
+  margin: 0 auto;
+}
+
+.footer_section a {
+  color: #fbfcfd;
+}
