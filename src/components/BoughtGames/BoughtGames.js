@@ -1,4 +1,4 @@
-import {useBoughtGamesContext} from "../../context/BoughtGamesContext";
+import {useBoughtGamesContext} from "../../context/BoughtGamescontext";
 import {BoughtGame} from "./BoughtGame";
 
 export const BoughtGames = () => {

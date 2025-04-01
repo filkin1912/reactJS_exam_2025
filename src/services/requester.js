@@ -13,6 +13,20 @@ const request = async (method, token, url, data) => {
         }
     }
 
+    const serializedAuth = localStorage.getItem('authKey');
+
+    if (serializedAuth) {
+        const auth = JSON.parse(serializedAuth);
+        token = auth.accessToken;
+
+        if (token) {
+            options.headers = {
+                ...options.headers,
+                'X-Authorization': token,
+            };
+        }
+    }
+    // и може да махнем токна отвсякъде, той не е вече нужен!
 
     if (token) {
         options.headers = {
