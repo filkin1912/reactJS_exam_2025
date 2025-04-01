@@ -1,6 +1,6 @@
 import {requestFactory} from './requester';
 
-const baseUrl = 'http://localhost:3030/jsonstore/games';
+const baseUrl = 'http://localhost:3030/data/games';
 
 export const gameServiceFactory = () => {
     const request = requestFactory();

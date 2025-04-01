@@ -14,15 +14,36 @@ export const GameProvider = ({children}) => {
     const gameService = gameServiceFactory();
 
 
+    // useEffect(() => {
+    //     if (location.pathname !== '/catalog') {
+    //         setFilteredGames([]);
+    //     }
+    //     gameService.getAll()
+    //         .then(result => {
+    //             setGames(result)
+    //         })
+    //         console.log(HUIIIIIIIIIIIIIII);
+            
+    // }, [location]);
     useEffect(() => {
+        // Check if the games are already fetched
+        if (games.length > 0) return; // Skip fetching if games are already set
+
+        // Reset filtered games if not on catalog page
         if (location.pathname !== '/catalog') {
             setFilteredGames([]);
         }
+
+        // Fetch games only once
         gameService.getAll()
             .then(result => {
-                setGames(result)
+                setGames(result); // Set games only once
             })
-    }, [location, gameService]);
+            .catch(err => {
+                console.error('Error fetching games:', err); // Log error if any
+            });
+    }, [location, games]); // Dependencies: location and games
+
 
     const handleSearch = (searchTerm) => {
         const results = games.filter(game =>
