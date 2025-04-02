@@ -10,30 +10,35 @@ export const GameProvider = ({children}) => {
     const location = useLocation();
     const navigate = useNavigate();
 
-    const [games, setGames] = useState([]);
+    // const [games, setGames] = useState([]);
+    const [games, setGames] = useState(() => {
+      return JSON.parse(localStorage.getItem('games')) || [];
+   });
+
+   useEffect(() => {
+      localStorage.setItem('games', JSON.stringify(games));
+   }, [games]);
+
     const [filteredGames, setFilteredGames] = useState([]);
     const gameService = gameServiceFactory();
     const { boughtGames, setBoughtGames } = useContext(BoughtGamesContext);
 
 
     useEffect(() => {
-        // Check if the games are already fetched
-        if (games.length > 0) return; // Skip fetching if games are already set
+        if (games.length > 0) return;
 
-        // Reset filtered games if not on catalog page
         if (location.pathname !== '/catalog') {
             setFilteredGames([]);
         }
 
-        // Fetch games only once
         gameService.getAll()
             .then(result => {
-                setGames(result); // Set games only once
+                setGames(result);
             })
             .catch(err => {
-                console.error('Error fetching games:', err); // Log error if any
+                console.error('Error fetching games:', err);
             });
-    }, [location, games]); // Dependencies: location and games
+    }, [location, games]);
 
 
     const handleSearch = (searchTerm) => {

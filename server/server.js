@@ -1354,7 +1354,7 @@
             },
             "126777f5-3277-42ad-b874-76d043b069cb": {
                 "_ownerId": "847ec027-f659-4086-8032-5173e2f9c93a",
-                "title": "Zombie Lang",
+                "title": "Zombie Lang 3",
                 "category": "Vertical Shooter",
                 "maxLevel": "100",
                 "imageUrl": "/images/ZombieLang.png",
