@@ -8,11 +8,11 @@ import {useGameContext} from "../../context/GameContext";
 
 export const DetailsGame = () => {
     const {onGameDeleteSubmit} = useGameContext();
-    const {userId} = useContext(AuthContext);
+    const {userId, userEmail, isAuthenticated} = useContext(AuthContext);
     const {gameId} = useParams();
     const [game, setGame] = useState({});
     const gameService = useService(gameServiceFactory)
-
+    const isOwner = game._ownerId === userId;
 
 
     useEffect(() => {
@@ -27,7 +27,7 @@ export const DetailsGame = () => {
         };
 
         fetchGameDetailsAndComments();
-    }, [gameId, gameService]);
+    }, [gameId]);
 
     useEffect(() => {
         console.log(game.comments);
@@ -47,10 +47,12 @@ export const DetailsGame = () => {
 
                 <p className="text">{game.summary}</p>
 
-                <div className="buttons">
-                    <Link to={`/catalog/${game._id}/edit`} className="button">EDIT</Link>
-                    <button className="button" id="btn" onClick={() => onGameDeleteSubmit(gameId)}>DELETE</button>
-                </div>
+                {isOwner && (
+                    <div className="buttons">
+                        <Link to={`/catalog/${game._id}/edit`} className="button">EDIT</Link>
+                        <button className="button" id="btn" onClick={() => onGameDeleteSubmit(gameId)}>DELETE</button>
+                    </div>
+                )}
 
             </div>
 

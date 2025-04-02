@@ -24,8 +24,8 @@ function App() {
 
     return (
         <AuthProvider>
-            <GameProvider>
-                <BoughtGamesProvider>
+            <BoughtGamesProvider>
+                <GameProvider>
                     <div>
                         <Header/>
 
@@ -60,10 +60,9 @@ function App() {
 
                         <Footer/>
                     </div>
-                </BoughtGamesProvider>
-            </GameProvider>
+                </GameProvider>
+            </BoughtGamesProvider>
         </AuthProvider>
-
     );
 }
 

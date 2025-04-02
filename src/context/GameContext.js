@@ -1,6 +1,7 @@
 import {createContext, useContext, useEffect, useState} from "react";
 import {gameServiceFactory} from "../services/gameService";
 import {useLocation, useNavigate} from "react-router-dom";
+import {BoughtGamesContext} from "./BoughtGamescontext";
 
 
 export const GameContext = createContext('');
@@ -12,19 +13,9 @@ export const GameProvider = ({children}) => {
     const [games, setGames] = useState([]);
     const [filteredGames, setFilteredGames] = useState([]);
     const gameService = gameServiceFactory();
+    const { boughtGames, setBoughtGames } = useContext(BoughtGamesContext);
 
 
-    // useEffect(() => {
-    //     if (location.pathname !== '/catalog') {
-    //         setFilteredGames([]);
-    //     }
-    //     gameService.getAll()
-    //         .then(result => {
-    //             setGames(result)
-    //         })
-    //         console.log(HUIIIIIIIIIIIIIII);
-            
-    // }, [location]);
     useEffect(() => {
         // Check if the games are already fetched
         if (games.length > 0) return; // Skip fetching if games are already set
@@ -61,6 +52,7 @@ export const GameProvider = ({children}) => {
         const newGame = await gameService.create(data);
 
         setGames((state) => [...state, newGame]);
+        setBoughtGames(() => [...boughtGames, newGame]);
 
         navigate("/catalog");
     };

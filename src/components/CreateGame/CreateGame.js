@@ -2,6 +2,7 @@ import "./CreateGame.css";
 import { useForm } from '../../hooks/useForm';
 import {useGameContext} from "../../context/GameContext";
 
+
 export const CreateGame = () => {
 
     const {onCreateGameSubmit} = useGameContext();

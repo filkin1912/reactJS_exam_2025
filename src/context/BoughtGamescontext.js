@@ -54,38 +54,77 @@ export const BoughtGamesProvider = ({children}) => {
     //         console.log(err);  // Add error handling.
     //     }
     // }
+//     const buyGame = async (game) => {
+//     console.log("Inside buyGame function");
+//     console.log(userId);
+//
+//     try {
+//         const user = await userService.getUser(userId);
+//         // Check if game is already bought
+//         if(boughtGames.some(boughtGame => boughtGame._id === game._id)) {
+//               // If game is already bought, show alert and stop execution
+//               alert("You already have this game");
+//               return;
+//         }
+//
+//         if (user.money >= game.price) {
+//             const newBoughtGame = await boughtGamesService.create(game);
+//             setBoughtGames([...boughtGames, newBoughtGame]);
+//
+//             const newMoney = user.money - game.price;
+//             user.money = newMoney;
+//             const result = await userService.update(user._id, user);
+//
+//             if (result && result._id) {
+//                 alert("Money successfully updated"); // Work on the wording to fit your context here
+//                 navigate('/catalog');
+//             } else {
+//                 alert('Error when updating balance!');
+//             }
+//
+//         } else {
+//             alert("Not enough money");
+//         }
+//
+//     } catch (err) {
+//         console.log(err);  // Add error handling.
+//     }
+// }
     const buyGame = async (game) => {
-    console.log("Inside buyGame function");
-    console.log(userId);
-    try {
-        const user = await userService.getUser(userId);
 
-        if (user.money >= game.price) {
-            const newBoughtGame = await boughtGamesService.create(game);
-            setBoughtGames([...boughtGames, newBoughtGame]);
-
-            const newMoney = user.money - game.price;
-            user.money = newMoney;
-            const result = await userService.update(user._id, user);
-
-            if (result && result._id) {
-                alert("Money successfully updated"); // Work on the wording to fit your context here
-                navigate('/catalog');
-            } else {
-                alert('Error when updating balance!');
-            }
-
-        } else {
-            alert("Not enough money");
+        if(boughtGames.some(boughtGame => boughtGame.title === game.title)) {
+            alert("You already have this game");
+            return;
         }
 
-    } catch (err) {
-        console.log(err);  // Add error handling.
+        try {
+            const user = await userService.getUser(userId);
+
+            if (user.money >= game.price) {
+                const newBoughtGame = await boughtGamesService.create(game);
+                setBoughtGames([...boughtGames, newBoughtGame]);
+
+                const newMoney = user.money - game.price;
+                user.money = newMoney;
+                const result = await userService.update(user._id, user);
+
+                if (result && result._id) {
+                    alert("Money successfully updated"); // Work on the wording to fit your context here
+                    navigate('/catalog');
+                } else {
+                    alert('Error when updating balance!');
+                }
+            } else {
+                alert("Not enough money");
+            }
+
+        } catch (err) {
+            console.log(err);
+        }
     }
-}
 
     const contextValues = {
-        boughtGames, buyGame,
+        boughtGames, buyGame, setBoughtGames,
     };
 
     return (

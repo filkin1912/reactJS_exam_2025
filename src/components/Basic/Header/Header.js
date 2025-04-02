@@ -38,7 +38,7 @@ export const Header = () => {
                                             <Link className="nav-link" to={`/details/${userId}`}>Details</Link>
                                         </li>
                                         <li className="nav-item">
-                                            <Link className="nav-link" to={'/bought-games'}>Bought Games</Link>
+                                            <Link className="nav-link" to={'/bought-games'}>Owned/Bought Games</Link>
                                         </li>
                                         <li className="nav-item">
                                             <Link className="nav-link" to={'/logout'}>Logout</Link>
