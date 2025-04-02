@@ -26,7 +26,6 @@ const request = async (method, token, url, data) => {
             };
         }
     }
-    // и може да махнем токна отвсякъде, той не е вече нужен!
 
     if (token) {
         options.headers = {

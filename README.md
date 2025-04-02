@@ -1,4 +1,4 @@
-INFORMATION ABOUT SERVER: https://github.com/softuni-practice-server/softuni-practice-server
+INFORMATION ABOUT THE SERVER: https://github.com/softuni-practice-server/softuni-practice-server
 
 # Getting Started with Create React App
 
