@@ -49,6 +49,10 @@ export const GameProvider = ({children}) => {
     };
 
     const onCreateGameSubmit = async (data) => {
+        if (!data.imageUrl) {
+            data.imageUrl = "/images/no-image.png";
+        }
+
         const newGame = await gameService.create(data);
 
         setGames((state) => [...state, newGame]);
