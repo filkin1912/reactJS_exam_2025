@@ -1,4 +1,5 @@
 import {Routes, Route,} from "react-router-dom";
+import {RouteGuard} from "./components/Basic/RouteGuard/RouteGuard";
 import {GameProvider} from "./context/GameContext";
 import {AuthProvider} from "./context/AuthContext";
 import {BoughtGamesProvider} from "./context/BoughtGamescontext";
@@ -31,12 +32,27 @@ function App() {
                         <Routes>
                             <Route path="/" element={<Home/>}/>
                             <Route path="/catalog" element={<Catalog/>}/>
-                            <Route path='/catalog/:gameId' element={<DetailsGame/>}/>
-                            <Route path="/catalog/:gameId/edit" element={<EditGame/>}/>
-                            <Route path="/create" element={<CreateGame/>}/>
+                            <Route path='/catalog/:gameId' element={
+                                <RouteGuard>
+                                    <DetailsGame/>
+                                </RouteGuard>}/>
+                            <Route path="/catalog/:gameId/edit" element={
+                                <RouteGuard>
+                                    <EditGame/>
+                                </RouteGuard>}/>
                             <Route path="/bought-games" element={<BoughtGames />}/>
-                            <Route path="/details/:userId" element={<UserDetailsPage/>}/>
-                            <Route path="/user-details" element={<UserDetails/>}/>
+                            <Route path="/details/:userId" element={
+                                <RouteGuard>
+                                    <UserDetailsPage/>
+                                </RouteGuard>}/>
+                            <Route path="/user-details" element={
+                                <RouteGuard>
+                                    <UserDetails/>
+                                </RouteGuard>}/>
+                            <Route path="/create" element={
+                                <RouteGuard>
+                                    <CreateGame/>
+                                </RouteGuard>}/>
                             <Route path="/register" element={<Register/>}/>
                             <Route path="/logout" element={<Logout/>}/>
                             <Route path="/login" element={<Login/>}/>
