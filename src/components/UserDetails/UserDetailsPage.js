@@ -38,7 +38,10 @@ export const UserDetailsPage = () => {
                         <label htmlFor="levels">MONEY: {userDetails.money}</label>
                     </div>
 
-                    <img className="game-img" src={userDetails.imageUrl}/>
+                    <img className="game-img"
+                        src={userDetails.imageUrl || "/images/no-image.png"}
+                        alt="User Profile"
+                    />
 
                     <Link className="btn submit" id="btn" to={`/user-details`}>Edit Details</Link>
                 </div>

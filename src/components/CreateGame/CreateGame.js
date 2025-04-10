@@ -2,11 +2,10 @@ import "./CreateGame.css";
 import { useForm } from '../../hooks/useForm';
 import {useGameContext} from "../../context/GameContext";
 
-
 export const CreateGame = () => {
 
     const {onCreateGameSubmit} = useGameContext();
-    const { values, changeHandler, onSubmit } = useForm({
+    const { values, changeHandler, onSubmit, errors } = useForm({
         title: '',
         category: '',
         maxLevel: '',
@@ -24,6 +23,7 @@ export const CreateGame = () => {
                     <label htmlFor="leg-title">TITLE:</label>
                     <input value={values.title} onChange={changeHandler} type="text" id="title" name="title"
                            placeholder="Enter game title..."/>
+                     {errors.title && <p className="error">{errors.title}</p>}  {/* Error message */}
 
                     <label htmlFor="category">CATEGORY:</label>
                     <input value={values.category} onChange={changeHandler} type="text" id="category" name="category"
@@ -43,6 +43,7 @@ export const CreateGame = () => {
                     <label htmlFor="levels">PRICE:</label>
                     <input value={values.price} onChange={changeHandler} type="number" id="price" name="price"
                            min="1" placeholder="1"/>
+
                     <input className="btn submit" type="submit" value="CREATE GAME"/>
                 </div>
             </form>

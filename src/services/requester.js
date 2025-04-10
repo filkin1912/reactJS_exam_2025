@@ -36,7 +36,6 @@ const request = async (method, token, url, data) => {
 
     const response = await fetch(url, options);
 
-
     if (response.status === 404) {
         throw new Error(`Not Found: The URL ${url} does not exist.`);
     }
@@ -48,6 +47,12 @@ const request = async (method, token, url, data) => {
     }
     if (response.status === 401) {
         throw new Error('Unauthorized: Invalid token.');
+    }
+    if (response.status === 409) {
+        const result = await response.json();
+        const error = new Error(result.message || "Conflict: The email is already registered.");
+        error.code = 409;
+        throw error;
     }
 
 

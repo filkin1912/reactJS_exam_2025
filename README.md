@@ -1,72 +1,78 @@
-INFORMATION ABOUT THE SERVER: https://github.com/softuni-practice-server/softuni-practice-server
+This React application :
 
-# Getting Started with Create React App
+#                                               **"reactJS_exam_2025"** 
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+serves as an online marketplace for video games. It facilitates operations like browsing the game catalog, managing user 
+accounts, purchasing games, and other user-interactions. 
+------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+To run the project, you need to perform the following commands:
+1. First, navigate to the main project folder. Then, to install all the necessary dependencies, execute the command:
+npm install
+2. After successfully installing the dependencies, you can start the client-side application by running:
+npm start
+3. The server must also be started. Navigate to the server folder within the main project folder. To start the server, 
+execute the following command:
+node .\server.js
+------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+Here is an overview of the project architecture and the key components of the application:
 
-## Available Scripts
+Context Providers:
+- AuthProvider: Provides authentication functionality (log in, register, log out) and holds data relative to the 
+  authenticated user.
+- GameProvider: Handles actions relative to the games (search, create, edit, delete) and holds the collection of games.
+- BoughtGamesProvider: Manages purchases and holds the list of games that the user has bought.
 
-In the project directory, you can run:
+Core Components:
+- Home:  Shows the latest, newest added games.
+- Register/Login/Logout: user registration, login, and logout.
+- UserDetails: Handling modification ability of user personal details(nationality, age, image, money).
+- UserDetailsPage: Displaying the user details(nationality, age, image, money).
+- Catalog: Displays the collection of games.
+- DetailsGame: Shows the detailed view of a selected game.
+- EditGame: Allows the modification of game details.
+- CreateGame: Component facilitating the creation of new games.
+- BoughtGames: Shows the list of games purchased by the user.
 
-### `npm start`
+Basic components:
+- Header - navigation component. It contains links to pages - Home, Catalog, Create Game, Details, Bought Games, Logout, 
+  Register, and Login. It also displays the SearchForm component if the user is authenticated and is on the Catalog page.
+- Footer - if a user is authenticated, it displays his email, otherwise, it shows "All rights reserved". 
+- SearchForm - functional form component that allows users to search for games by title. 
+- RouteGuard - component used to restrict user navigation based on their authentication status, which is stored in the 
+  local storage. It allows navigation only if the user is authenticated; otherwise, it redirects to the login page.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Routing:
+The application routing is handled by "react-router-dom" library.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Storage:
+localStorage is used to persists user and game data across sessions.
 
-### `npm test`
+Hooks and custom hooks:
+- useService custom hook is used to make service calls. 
+- useForm custom hook takes in initial form values and a submit handler function, and returns an object containing the 
+  current form values, a change handler function for updating the form values, a submit handler function that calls the 
+  provided onSubmitHandler function with the current form values, and a function to manually update the form values.
+- useLocalStorage custom hook accepts a key and an initial value, and returns a state variable and a function to update 
+  this state variable. Any changes to this state variable are also saved to localStorage under the provided key.
+- other hooks from React (useState, useEffect, useContext) are used to manage state and side effects.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Services:
+Services are used to interact with the backend and manage the data for users and games. They include:
+- authService: returns an object with methods: login, register, logout, and details. These methods make authenticated 
+  requests to the server to perform corresponding user authentication actions.
+- boughtGamesService: returns an object with methods such as "getAll" and "create". "getAll" retrieves all games bought 
+  by the current logged-in user, and "create" adds new game purchases to the server.
+- comment Service: contains methods for handling comments related actions: "getAll" (fetches all the comments related to
+  a game) and "create" (sends a request to the server to create a new comment).
+- gameService: returns an object with several methods for handling game-related actions. The methods fetch 
+  all games (getAll), fetch a particular game (getOne), create a new game (create), edit a game (edit), 
+  add game comments (addComment), and delete a game (delete).
+- requestFactory: this module provides a set of request methods (GET, POST, PUT, PATCH, DELETE) for making HTTP requests 
+  to the server. It handles request options, authorization headers, and different response statuses.
+- userService: returns an object with several methods such as "getUser", "additionalInfoByOwnerId", "update", and 
+  "createInitialDetails" to manage user data. These methods make requests to the server to fetch user information, 
+  create default details, update existing data, and handle cases when a resource does not exist.
 
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+I hope this gives you a solid overview. For more granular details, please refer to the inline documentation in the code.

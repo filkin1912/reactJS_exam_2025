@@ -174,3 +174,34 @@
     font-size: 60px;
     font-family: "Agency FB";
 }
+
+.game-title {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+    padding: 10px;
+    font-size: 1.5rem;
+    text-align: center;
+    border-radius: 4px;
+    width: 90%;
+}
+
+.game-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.game-item {
+    border: 1px solid black;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 375px;
+    height: 375px;
+    overflow: hidden;
+    position: relative;
+}

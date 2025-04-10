@@ -1,11 +1,13 @@
 import {requestFactory} from './requester';
 import * as commentService from '../services/commentService';
+import {boughtGamesServiceFactory} from "./boughtGameService";
 
 const baseUrl = 'http://localhost:3030/data/games';
 
 export const gameServiceFactory = (token) => {
     const request = requestFactory(token);
     const requestWithoutToken = requestFactory();
+    const boughtGamesService = boughtGamesServiceFactory(token);
 
     const getAll = async () => {
         const result = await requestWithoutToken.get(baseUrl);
@@ -25,7 +27,7 @@ export const gameServiceFactory = (token) => {
 
     const create = async (gameData) => {
         const result = await request.post(baseUrl, gameData);
-
+        await boughtGamesService.create(gameData);
         console.log(result);
 
         return result;
