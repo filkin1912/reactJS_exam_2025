@@ -1,8 +1,13 @@
 import {useBoughtGamesContext} from "../../context/BoughtGamescontext";
 import {BoughtGame} from "./BoughtGame";
 
+
 export const BoughtGames = () => {
-    const {boughtGames} = useBoughtGamesContext();
+    const { boughtGames } = useBoughtGamesContext();
+
+    if (!Array.isArray(boughtGames)) {
+        return <div>No games found</div>; // Or some fallback UI
+    }
 
     return (
         <section id="bought-games-page">

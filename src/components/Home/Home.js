@@ -1,33 +1,21 @@
-import {useContext} from "react";
-import {AuthContext} from "../../context/AuthContext";
-import {useGameContext} from "../../context/GameContext";
+import { useContext } from "react";
+import { AuthContext } from "../../context/AuthContext";
+import { useGameContext } from "../../context/GameContext";
 
 export const Home = () => {
 
-    const {games} = useGameContext();
+    const { games } = useGameContext();
     const latestGames = games ? games.slice(-3) : [];
-    const {isAuthenticated,} = useContext(AuthContext);
+    const { isAuthenticated } = useContext(AuthContext);
 
     return (
         <section id="home-page">
             {isAuthenticated && (<h1>Latest added Games</h1>)}
             {!isAuthenticated && (<h1>If you want to buy games, please login or register</h1>)}
-            <div style={{
-                display: "flex",
-                justifyContent: "space-between",
-                flexWrap: "wrap"
-            }}>
+            <div className="game-container">
                 {latestGames.map(game =>
-                    <div key={game._id} style={{
-                        border: "1px solid black",
-                        backgroundImage: `url(${game.imageUrl})`,
-                        backgroundPosition: 'center',
-                        backgroundSize: 'cover',
-                        backgroundRepeat: 'no-repeat',
-                        width: "375px",
-                        height: "375px",
-                        overflow: "hidden"
-                    }}>
+                    <div key={game._id} className="game-item" style={{ backgroundImage: `url(${game.imageUrl})` }}>
+                        <h3 className="game-title">{game.title}</h3>
                     </div>
                 )}
             </div>

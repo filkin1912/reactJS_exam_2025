@@ -5,6 +5,7 @@ const baseUrl = 'http://localhost:3030/data/boughtGames';
 export const boughtGamesServiceFactory = (token) => {
     const request = requestFactory(token);
 
+    // Fetches all bought games by a specific user's ID.
     const getAll = async (loggedUser) => {
         try {
             const result = await request.get(baseUrl);
@@ -22,7 +23,7 @@ export const boughtGamesServiceFactory = (token) => {
         }
     };
 
-
+    // Adds a new game to the bought games list.
     const create = async (gameData) => {
         const result = await request.post(baseUrl, gameData);
         console.log(result);

@@ -8,7 +8,7 @@ export const Register = () => {
 
     const {onRegisterSubmit} = useContext(AuthContext);
 
-    const {values, changeHandler, onSubmit} = useForm({
+    const {values, errors, changeHandler, onSubmit} = useForm({
         email: '',
         password: '',
         confirmPassword: '',
@@ -29,6 +29,7 @@ export const Register = () => {
                         value={values.email}
                         onChange={changeHandler}
                     />
+                    {errors.email && <p style={{color: 'red'}}>{errors.email}</p>}
 
                     <label htmlFor="pass">PASSWORD:</label>
                     <input
@@ -38,6 +39,7 @@ export const Register = () => {
                         value={values.password}
                         onChange={changeHandler}
                     />
+                    {errors.password && <p style={{color: 'red'}}>{errors.password}</p>}
 
                     <label htmlFor="con-pass">CONFIRM PASSWORD:</label>
                     <input
@@ -47,6 +49,7 @@ export const Register = () => {
                         value={values.confirmPassword}
                         onChange={changeHandler}
                     />
+                    {errors.confirmPassword && <p style={{color: 'red'}}>{errors.confirmPassword}</p>}
 
                     <input className="btn submit" type="submit" value="REGISTER"/>
                 </div>

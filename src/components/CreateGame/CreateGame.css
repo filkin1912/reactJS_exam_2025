@@ -37,3 +37,10 @@ textarea {
     color: black;
     box-shadow: inset 1px 1px 1px #c0c2c5, inset -1px -1px 1px white;
 }
+
+.error {
+    color: red;
+    font-size: 0.9rem;
+    margin-top: 5px;
+    display: block;
+}

@@ -18,6 +18,7 @@ export const userServiceFactory = (token) => {
     };
 
 
+    // Creates initial details for a user if no details exist.
     const createInitialDetails = async () => {
         const data = {
             nationality: '',
@@ -30,6 +31,8 @@ export const userServiceFactory = (token) => {
         return result;
     }
 
+    // Fetches the additional information of a user by their owner ID.
+    // If the user doesn't have additional info, it creates default values.
     const additionalInfoByOwnerId = async (loggedUserId) => {
 
         try {
@@ -46,7 +49,7 @@ export const userServiceFactory = (token) => {
         }
     };
 
-
+    // Updates the user's information.
     const update = async (userId, data) => {
         try {
             await request.get(`${baseUrl}/${userId}`);
