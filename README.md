@@ -9,11 +9,12 @@ accounts, purchasing games, and other user-interactions.
 To run the project, you need to perform the following commands:
 1. First, navigate to the main project folder. Then, to install all the necessary dependencies, execute the command:
 npm install
-2. After successfully installing the dependencies, you can start the client-side application by running:
-npm start
-3. The server must also be started. Navigate to the server folder within the main project folder. To start the server, 
+2. The server must also be started. Navigate to the server folder within the main project folder. To start the server, 
 execute the following command:
 node .\server.js
+3. After successfully installing the dependencies and starting the server, you can start the client-side application 
+   by running:
+npm start
 ------------------------------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------------------
 Here is an overview of the project architecture and the key components of the application:
